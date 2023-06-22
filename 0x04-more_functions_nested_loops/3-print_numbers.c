@@ -3,13 +3,14 @@
 /**
  * print_numbers - Prints numbers 0 to 9 followed by a new line
  */
+
 void print_numbers(void)
 {
-int num;
+char c;
 
-for (num = 0; num <= 9; num++)
+for (c = '0'; c <= '9'; c++)
 {
-_putchar(num + '0');
+_putchar(c);
 }
 
 _putchar('\n');
