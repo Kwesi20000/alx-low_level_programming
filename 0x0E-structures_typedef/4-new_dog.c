@@ -19,7 +19,7 @@ dog_t *new_dog(char *name, float age, char *owner)
 
 	new_dog = malloc(sizeof(dog_t));
 	if (new_dog == NULL)
-		return NULL;
+		return (NULL);
 
 	name_length = strlen(name);
 	owner_length = strlen(owner);
@@ -32,7 +32,7 @@ dog_t *new_dog(char *name, float age, char *owner)
 		free(name_copy);
 		free(owner_copy);
 		free(new_dog);
-		return NULL;
+		return (NULL);
 	}
 
 	strcpy(name_copy, name);
@@ -42,6 +42,6 @@ dog_t *new_dog(char *name, float age, char *owner)
 	new_dog->age = age;
 	new_dog->owner = owner_copy;
 
-	return new_dog;
+	return (new_dog);
 }
 
