@@ -2,39 +2,42 @@
 #include <stdlib.h>
 
 /**
- * main - Entry point
- * @argc: The number of command line arguments
- * @argv: An array containing the command line arguments
+ * main - prints its own opcodes
+ * @argc: number of arguments
+ * @argv: array of arguments
  *
- * Return: 0 on success, 1 if the number of arguments is incorrect,
- *         or 2 if the number of bytes is negative
+ * Return: Always 0 (Success)
  */
 int main(int argc, char *argv[])
 {
-int i, num_bytes;
+	int bytes, i;
+	char *arr;
 
-if (argc != 2)
-{
-printf("Error\n");
-return (1);
+	if (argc != 2)
+	{
+		printf("Error\n");
+		exit(1);
+	}
+
+	bytes = atoi(argv[1]);
+
+	if (bytes < 0)
+	{
+		printf("Error\n");
+		exit(2);
+	}
+
+	arr = (char *)main;
+
+	for (i = 0; i < bytes; i++)
+	{
+		if (i == bytes - 1)
+		{
+			printf("%02hhx\n", arr[i]);
+			break;
+		}
+		printf("%02hhx ", arr[i]);
+	}
+	return (0);
 }
 
-num_bytes = atoi(argv[1]);
-
-if (num_bytes < 0)
-{
-printf("Error\n");
-return (2);
-}
-
-unsigned char *main_ptr = (unsigned char *)&main;
-
-for (i = 0; i < num_bytes; i++)
-{
-printf("%02x ", main_ptr[i]);
-}
-
-printf("\n");
-
-return (0);
-}
