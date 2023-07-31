@@ -1,6 +1,5 @@
-#include <stdio.h>
 #include <stddef.h>
-#include <stdlib.h>
+#include <stdio.h>
 #include "lists.h"
 
 /**
@@ -12,37 +11,34 @@
  */
 size_t print_listint_safe(const listint_t *head)
 {
-const listint_t *slow = head, *fast = head;
 size_t node_count = 0;
+const listint_t *current = head, *loop_start = NULL;
 
-while (fast != NULL && fast->next != NULL)
+while (current != NULL)
 {
-printf("[%p] %d\n", (void *)slow, slow->n);
-slow = slow->next;
-fast = fast->next->next;
-
 node_count++;
+printf("[%p] %d\n", (void *)current, current->n);
 
-if (slow == fast)
+if (current->next >= current)
 {
-printf("[%p] %d\n", (void *)slow, slow->n);
-printf("-> [%p] %d\n", (void *)fast->next, fast->next->n);
+loop_start = current->next;
 break;
 }
+
+current = current->next;
 }
 
-if (fast == NULL || fast->next == NULL)
+if (loop_start != NULL)
 {
-while (slow != NULL)
+current = head;
+while (current != loop_start)
 {
-printf("[%p] %d\n", (void *)slow, slow->n);
-slow = slow->next;
 node_count++;
+printf("[%p] %d\n", (void *)current, current->n);
+current = current->next;
 }
+printf("-> [%p] %d\n", (void *)loop_start, loop_start->n);
 }
-
-if (slow == NULL)
-node_count = 0;
 
 return (node_count);
 }
