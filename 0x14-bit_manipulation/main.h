@@ -21,5 +21,8 @@ int clear_bit(unsigned long int *n, unsigned int index);
 /* Task 5: Flip Bits */
 unsigned int flip_bits(unsigned long int n, unsigned long int m);
 
+/* Task 6 */
+int get_endianness(void);
+
 #endif /* MAIN_H */
 
