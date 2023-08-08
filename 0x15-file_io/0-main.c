@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include "main.h"
 
+/**
+ * main - Entry point of the program.
+ * @ac: The number of command-line arguments.
+ * @av: An array of strings representing the command-line arguments.
+ * Return: Always 0.
+ */
+
 int main(int ac, char **av)
 {
 ssize_t n;
