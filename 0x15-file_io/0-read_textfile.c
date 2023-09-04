@@ -1,51 +1,59 @@
-#include <unistd.h>
-#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "main.h"
 
 /**
- * read_textfile - Reads and prints the content of a text file to stdout.
+ * read_textfile - Reads and prints a text file to the POSIX standard output.
  * @filename: The name of the file to read.
- * @letters: The maximum number of letters to read and print.
+ * @letters: The number of letters to read and print.
  *
- * Return: The total number of letters read and printed, or 0 on failure.
+ * Return: The actual number of letters it could read and print.
+ *         If the file cannot be opened or read, return 0.
+ *         If filename is NULL, return 0.
+ *         If write fails or does not write the expected amount of bytes,
+ *         return 0.
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int file_descriptor;
-	char buffer[1024];
-	ssize_t bytes_read, bytes_written, total_written = 0;
+	int fd;
+	ssize_t bytes_read, bytes_written;
+	char *buffer;
 
 	if (filename == NULL)
-	return (0);
-
-	file_descriptor = open(filename, O_RDONLY);
-	if (file_descriptor == -1)
 		return (0);
 
-	while ((bytes_read = read(file_descriptor, buffer, sizeof(buffer))) > 0)
+	buffer = malloc(sizeof(char) * letters);
+	if (buffer == NULL)
+		return (0);
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 	{
-		if (letters < (size_t)bytes_read)
-		{
-			bytes_read = letters;
-
-			bytes_written = write(STDOUT_FILENO, buffer, bytes_read);
-		}
-		if (bytes_written == -1 || bytes_written != bytes_read)
-		{
-			close(file_descriptor);
-			return (0);
-		}
-
-		letters -= bytes_written;
-		total_written += bytes_written;
-
-		if (letters == 0)
-			break;
+		free(buffer);
+		return (0);
 	}
 
-	close(file_descriptor);
-	return (total_written);
+	bytes_read = read(fd, buffer, letters);
+	if (bytes_read == -1)
+	{
+		free(buffer);
+		close(fd);
+		return (0);
+	}
+
+	bytes_written = write(STDOUT_FILENO, buffer, bytes_read);
+	if (bytes_written == -1 || bytes_written != bytes_read)
+	{
+		free(buffer);
+		close(fd);
+		return (0);
+	}
+
+	free(buffer);
+	close(fd);
+
+	return (bytes_written);
 }
 
