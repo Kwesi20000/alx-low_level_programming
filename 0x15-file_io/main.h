@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <elf.h>
+#include <string.h>
 
 /* _putchar - writes a character to stdout */
 int _putchar(char c);
