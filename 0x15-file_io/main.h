@@ -16,7 +16,7 @@ int create_file(const char *filename, char *text_content);
 /* append_text_to_file - appends text to the end of a file */
 int append_text_to_file(const char *filename, char *text_content);
 
-/* display_error_and_exit - displays an error message and exits with the specified status code */
+/* display_error_and_exit */
 void display_error_and_exit(const char *error_message);
 
 /* display_elf_header_info - displays information from the ELF header */
